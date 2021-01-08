@@ -8,12 +8,22 @@ class DockingStation
     end
 
     def release_bike
-      raise StandardError.new "No bikes available" if @bike_shed == []
+      empty?
       Bike.new
     end
 
     def dock(bike)
-        raise StandardError.new "Docking station is full" if @bike_shed.length == 20
-        @bike_shed << bike
+      full?
+      @bike_shed << bike
+    end
+
+    private
+
+    def full?
+      raise StandardError.new "Docking station is full" if @bike_shed.length >= 20
+    end
+
+    def empty?
+      raise StandardError.new "No bikes available" if @bike_shed == []
     end
 end
