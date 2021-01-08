@@ -12,7 +12,7 @@ class DockingStation
 
     def release_bike
       empty?
-      Bike.new
+      @bike_shed.pop unless @bike_shed[0].broken?
     end
 
     def dock(bike)
