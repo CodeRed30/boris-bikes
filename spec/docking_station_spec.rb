@@ -21,12 +21,21 @@ describe DockingStation do
     it { is_expected.to respond_to(:bike_shed) }
 
     it "raises error - docking station is empty" do
-      expect { subject.release_bike }.to raise_error
+      expect { subject.release_bike }.to raise_error "No bikes available"
     end
 
     it 'raises error - docking station is full' do
-      # bike = Bike.new
-      expect { subject.dock }.to raise_error
+      docking_station = DockingStation.new
+      20.times { docking_station.dock Bike.new }
+      expect { docking_station.dock(Bike.new) }.to raise_error "Docking station is full"
     end
+
+describe 'initialization' do
+  it 'has a variable capacity' do
+    docking_station = DockingStation.new(50)
+    50.times { docking_station.dock Bike.new }
+    expect{ docking_station.dock Bike.new }.to raise_error "Docking station is full"
+  end
+end
 
 end
